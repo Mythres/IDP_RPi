@@ -1,2 +1,2 @@
 # IDP_RPi
-Rapsberry Pi control system for IDP Robot
+Raspberry Pi control system for IDP Robot
