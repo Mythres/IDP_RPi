@@ -30,7 +30,10 @@ class Cli:
                     print()
                 elif command == "quit" or command == "exit":
                     self.send("exit")
-                    sys.exit()                    
+                    sys.exit()
+                elif command == "read":
+                    while self.conn.poll():
+                        print(self.conn.recv())
                 else:
                     self.send(command)
             else:

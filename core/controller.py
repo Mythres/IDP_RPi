@@ -15,25 +15,30 @@ class Controller:
 
     def run(self):
         while True:
-            received = self.interface_conn.recv().split(" ")
-            if received[0] == "exit":
-                if self.started:
-                    self.stop()
-                if self.assignment != None:
+            if self.interface_conn.poll():
+                received = self.interface_conn.recv().split(" ")
+                if received[0] == "exit":
+                    if self.started:
+                        self.stop()
+                    if self.assignment is not None:
+                        self.unload()
+                    self.interface_conn.send("exit")
+                    return
+
+                if received[0] == "load":
+                    self.load(received[1])
+                elif received[0] == "unload":
                     self.unload()
-                self.interface_conn.send("exit")
-                return
-            
-            if received[0] == "load":
-                self.load(received[1])
-            elif received[0] == "unload":
-                self.unload()
-            elif received[0] == "start":
-                self.start()
-            elif received[0] == "stop":
-                self.stop()
-            elif received[0] == "send":
-                self.send(received[1])
+                elif received[0] == "start":
+                    self.start()
+                elif received[0] == "stop":
+                    self.stop()
+                elif received[0] == "send":
+                    self.send(received[1])
+
+            if self.assignment_conn.poll():
+                received = self.assignment_conn.recv()
+                self.interface_conn.send(received)
 
     def load(self, assignment):
         self.assignment = importlib.import_module("assignments." + assignment + "." + assignment)
@@ -41,11 +46,11 @@ class Controller:
         self.interface_conn.send(assignment + " loaded.")
 
     def unload(self):
-        if self.assignment == None:
+        if self.assignment is None:
             self.interface_conn.send("No assignment has been loaded.")
             return
         else:
-            if self.assignment_conn == None:
+            if self.assignment_conn is None:
                 self.assignment.unload()
             else:
                 self.assignment_conn.send("Unload")
@@ -61,9 +66,9 @@ class Controller:
 
 
     def start(self):
-        if self.assignment == None:
+        if self.assignment is None:
             self.interface_conn.send("Please load an assignment first.")
-        elif self.assignment_conn != None:
+        elif self.assignment_conn is not None:
             self.assignment_conn.send("Run")
             while self.assignment_conn.recv() != "Started":
                     continue
