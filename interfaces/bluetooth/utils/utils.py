@@ -8,18 +8,29 @@ def get_socket(mac_address):
 def send_data(socket, data):
     socket.send(bytes(len(data)) + b"|" + bytes(data, "utf-8") + b';')
 
+def check_data(data):
+    all_complete = True
+    commands = data.split(";")
+
+    for command in commands:
+        command_split = command.split("|")
+        if command_split[0] != len(command_split[1]):
+            all_complete = False
+
+    return all_complete
+
 def recv_data(socket):
     data = ""
+    commands = []
 
     while "|" not in data:
-        data += socket.recv(1024).decode("utf-8")
+        data += socket.recv(1024).decode("utf-8", errors="ignore")
 
-    msg_length = int(data[0:data.index("|")])
-    data = data[data.index("|") + 1:]
+    while check_data(data):
+        data += socket.recv(1024).decode("utf-8", errors="ignore")
 
-    while len(data) < msg_length:
-        data += socket.recv(1024).decode("utf-8")
+    for command in data.split(";"):
+        command_split = command.split("|")
+        commands.append(command_split[1])
 
-    data = data.split(";")
-
-    return data
+    return commands

@@ -31,6 +31,7 @@ class Bluetooth:
             try:
                 commands = self.bl_recv()
                 for command in commands:
+                    print(command)
                     command_split = command.split(" ")
                     command_params = command_split[0] + "/" + str(len(command_split))
 
@@ -56,7 +57,7 @@ class Bluetooth:
 
     def send(self, command):
         self.conn.send(command)
-        print(self.conn.recv() + "\n")
+        self.conn.send(self.conn.recv() + "\n")
 
     def bl_send(self, data):
         utils.send_data(self.socket, data)
