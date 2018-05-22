@@ -6,7 +6,7 @@ def get_socket(mac_address):
     return sock
 
 def send_data(socket, data):
-    socket.send(bytes(len(data)) + b"|" + bytes(data, "utf-8"))
+    socket.send(bytes(len(data)) + b"|" + bytes(data, "utf-8") + b';')
 
 def recv_data(socket):
     data = ""
@@ -19,5 +19,7 @@ def recv_data(socket):
 
     while len(data) < msg_length:
         data += socket.recv(1024).decode("utf-8")
+
+    data = data.split(";")
 
     return data

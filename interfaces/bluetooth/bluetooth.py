@@ -29,26 +29,27 @@ class Bluetooth:
         print('Listening..')
         while True:
             try:
-                command = self.bl_recv()
-                command_split = command.split(" ")
-                command_params = command_split[0] + "/" + str(len(command_split))
+                commands = self.bl_recv()
+                for command in commands:
+                    command_split = command.split(" ")
+                    command_params = command_split[0] + "/" + str(len(command_split))
 
-                if command_params in self.commands:
-                    if len(command_split) > 1:
-                        if command_split[1] in self.assignment_mods.keys():
-                            self.send(command)
+                    if command_params in self.commands:
+                        if len(command_split) > 1:
+                            if command_split[1] in self.assignment_mods.keys():
+                                self.send(command)
+                            else:
+                                print("Received invalid assignment.\n")
+                        elif command == "quit" or command == "exit":
+                            self.send("exit")
+                            sys.exit()
+                        elif command == "read":
+                            while self.conn.poll():
+                                self.bl_send(self.conn.recv())
                         else:
-                            print("Received invalid assignment.\n")
-                    elif command == "quit" or command == "exit":
-                        self.send("exit")
-                        sys.exit()
-                    elif command == "read":
-                        while self.conn.poll():
-                            self.bl_send(self.conn.recv())
+                            self.send(command)
                     else:
-                        self.send(command)
-                else:
-                    print("Received invalid command\n")
+                        print("Received invalid command\n")
 
             except IOError:
                 pass
