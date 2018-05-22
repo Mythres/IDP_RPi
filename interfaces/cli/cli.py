@@ -1,11 +1,13 @@
+import interfaces.constants as constants
 import sys
 import utils.utils as utils
+
 
 class Cli:
     def __init__(self, assignment_mods, conn):
         self.assignment_mods = assignment_mods
         self.conn = conn
-        self.commands = ["load/2", "unload/1", "start/1", "stop/1", "help/1", "quit/1", "exit/1"]
+        self.commands = constants.commands
     
     def run(self):
         print("Welcome!")
@@ -37,6 +39,7 @@ class Cli:
     def send(self, command):
         self.conn.send(command)
         print(self.conn.recv() + "\n")
+
 
 def start(assignment_mods, conn):
     cli = Cli(assignment_mods, conn)

@@ -32,6 +32,8 @@ class Controller:
                 self.start()
             elif received[0] == "stop":
                 self.stop()
+            elif received[0] == "send":
+                self.send(received[1])
 
     def load(self, assignment):
         self.assignment = importlib.import_module("assignments." + assignment + "." + assignment)
@@ -85,5 +87,13 @@ class Controller:
             while self.assignment_conn.recv() != "Stopped":
                     continue
             return
+        else:
+            self.interface_conn.send("No assignment is currently running.")
+
+    def send(self, msg):
+        if self.started:
+            self.assignment_conn.send(msg)
+            self.assignment_conn.recv()
+            self.interface_conn.send("Message sent.")
         else:
             self.interface_conn.send("No assignment is currently running.")

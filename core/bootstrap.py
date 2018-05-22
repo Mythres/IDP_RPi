@@ -9,7 +9,7 @@ def bootstrap_interface():
     counter = 1
 
     for dir_entry in os.scandir("./interfaces"):
-        if dir_entry.is_dir():
+        if dir_entry.is_dir() and "__" not in dir_entry.name:
             mod_name = dir_entry.path.split('/')[-1]
             interface_mods[mod_name] = importlib.import_module("interfaces." + mod_name + "." + mod_name)
             interface_mods_help += (str(counter) + ". " + mod_name + "\n")
