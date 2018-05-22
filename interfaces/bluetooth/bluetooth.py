@@ -44,7 +44,7 @@ class Bluetooth:
                         sys.exit()
                     elif command == "read":
                         while self.conn.poll():
-                            print(self.conn.recv())
+                            self.bl_send(self.conn.recv())
                     else:
                         self.send(command)
                 else:

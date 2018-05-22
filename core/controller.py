@@ -36,7 +36,7 @@ class Controller:
                 elif received[0] == "send":
                     self.send(received[1])
 
-            if self.assignment_conn.poll():
+            if self.started and self.assignment_conn.poll():
                 received = self.assignment_conn.recv()
                 self.interface_conn.send(received)
 
