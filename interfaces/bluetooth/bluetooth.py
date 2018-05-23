@@ -24,7 +24,7 @@ class Bluetooth:
 
         print("Connection established.\n")
 
-        self.bl_send("Hello!")
+        #self.bl_send("Hello Everyone!")
 
         print('Listening..')
         while True:
@@ -36,11 +36,13 @@ class Bluetooth:
                     command_params = command_split[0] + "/" + str(len(command_split))
 
                     if command_params in self.commands:
-                        if len(command_split) > 1:
+                        if len(command_split) > 1 and command_split[0] == "load":
                             if command_split[1] in self.assignment_mods.keys():
                                 self.send(command)
                             else:
                                 print("Received invalid assignment.\n")
+                        elif len(command_split) > 1 and command_split[0] == "send":
+                            self.send(command)
                         elif command == "quit" or command == "exit":
                             self.send("exit")
                             sys.exit()

@@ -6,18 +6,19 @@ def get_socket(mac_address):
     return sock
 
 def send_data(socket, data):
-    socket.send(bytes(len(data)) + b"|" + bytes(data, "utf-8") + b';')
+    socket.send(bytes(str(len(data)), "utf-8") + b"|" + bytes(data, "utf-8") + b';')
+    print("P: " + str(len(data)) + "|" + data + ";") 
 
 def check_data(data):
-    all_complete = True
     commands = data.split(";")
-
     for command in commands:
+        if command.find("|") == -1 and len(command) > 0:
+            return False
         command_split = command.split("|")
-        if command_split[0] != len(command_split[1]):
-            all_complete = False
+        if len(command) > 0 and int(command_split[0]) != len(command_split[1]):
+            return False
 
-    return all_complete
+    return True
 
 def recv_data(socket):
     data = ""
@@ -26,11 +27,12 @@ def recv_data(socket):
     while "|" not in data:
         data += socket.recv(1024).decode("utf-8", errors="ignore")
 
-    while check_data(data):
+    while not check_data(data):
         data += socket.recv(1024).decode("utf-8", errors="ignore")
 
     for command in data.split(";"):
-        command_split = command.split("|")
-        commands.append(command_split[1])
+        if len(command) != 0:
+            command_split = command.split("|")
+            commands.append(command_split[1])
 
     return commands
