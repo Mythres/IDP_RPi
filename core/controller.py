@@ -68,11 +68,10 @@ class Controller:
             self.interface_conn.send("Unloaded " + assignment.name() + ".")
             return
 
-
     def start(self):
         if self.assignment is None:
             self.interface_conn.send("Please load an assignment first.")
-        elif self.started == True:
+        elif self.started:
             self.interface_conn.send("The assignment has already started.")
             return
         elif self.assignment_conn is not None:
@@ -87,7 +86,7 @@ class Controller:
             self.assignment_proc = Process(target=self.assignment.start, args=(child_conn,))
             self.assignment_proc.start()
             while self.assignment_conn.recv() != "Started":
-                    continue
+                continue
             self.started = True
             self.interface_conn.send(self.assignment.name() + " started.")
 
@@ -97,7 +96,7 @@ class Controller:
             self.started = False
             self.interface_conn.send(self.assignment.name() + " stopped.")
             while self.assignment_conn.recv() != "Stopped":
-                    continue
+                continue
             return
         else:
             self.interface_conn.send("No assignment is currently running.")
@@ -105,7 +104,8 @@ class Controller:
     def send(self, msg):
         if self.started:
             self.assignment_conn.send(msg)
-            self.assignment_conn.recv()
+            while self.assignment_conn.recv() != "Received":
+                continue
             self.interface_conn.send("Message sent.")
         else:
             self.interface_conn.send("No assignment is currently running.")
