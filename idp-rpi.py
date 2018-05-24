@@ -12,7 +12,7 @@ if __name__ == "__main__":
         interface.start(bootstrap.bootstrap_assignments(), parent_conn)
         con_p.join()
     except KeyboardInterrupt:
-        print("Exiting..")
+        print("Exiting...")
         try:
             child_conn.send("exit")
             con_p.join()
