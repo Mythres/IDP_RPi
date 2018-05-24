@@ -15,6 +15,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nExiting...")
         try:
+            sys.tracebacklimit = 0
             child_conn.send("exit")
             con_p.join()
             sys.exit(1)
