@@ -23,7 +23,7 @@ class Ass1:
                     sending += str(id) + ":" + temp + ","
                     sending += str(id) + ":" + pos
                     sending += "-"
-                except:
+                except self.servos.timeoutError:
                     self.conn.send("Servo not found.")
 
             self.conn.send(sending[:-1])
@@ -51,7 +51,7 @@ class Ass1:
                         self.servos.move(1, 1000)
                         self.servos.move(2, 1000)
                         sleep(2)
-                    except:
+                    except self.servos.timeoutError:
                         self.conn.send("Servo not found.")
                 
 
