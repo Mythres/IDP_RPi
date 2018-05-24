@@ -81,4 +81,8 @@ def unload():
     i = 0
 
 def start(conn):
-    ass1.run(conn)
+    try:
+        ass1.run(conn)
+    except KeyboardInterrupt:
+        ass1.unload()
+        sys.exit(1)

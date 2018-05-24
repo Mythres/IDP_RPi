@@ -1,9 +1,14 @@
 import importlib
+import sys
 from multiprocessing import Process, Pipe
 
 def start(conn):
-    controller = Controller(conn)
-    controller.run()
+    try:
+        controller = Controller(conn)
+        controller.run()
+    except KeyboardInterrupt:
+        controller.unload(False)
+        sys.exit(1)
 
 class Controller:
     def __init__(self, conn):
@@ -21,14 +26,14 @@ class Controller:
                     if self.started:
                         self.stop()
                     if self.assignment is not None:
-                        self.unload()
+                        self.unload(True)
                     self.interface_conn.send("exit")
                     return
 
                 if received[0] == "load":
                     self.load(received[1])
                 elif received[0] == "unload":
-                    self.unload()
+                    self.unload(True)
                 elif received[0] == "start":
                     self.start()
                 elif received[0] == "stop":
@@ -49,7 +54,7 @@ class Controller:
         self.assignment.load()
         self.interface_conn.send(assignment + " loaded.")
 
-    def unload(self):
+    def unload(self, wait):
         if self.assignment is None:
             self.interface_conn.send("No assignment has been loaded.")
             return
@@ -58,7 +63,7 @@ class Controller:
                 self.assignment.unload()
             else:
                 self.assignment_conn.send("Unload")
-                while self.assignment_conn.recv() != "Unloaded":
+                while self.assignment_conn.recv() != "Unloaded" and wait:
                     continue
             
             assignment = self.assignment 
