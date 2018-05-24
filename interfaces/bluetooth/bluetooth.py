@@ -59,7 +59,7 @@ class Bluetooth:
 
     def send(self, command):
         self.conn.send(command)
-        self.conn.send(self.conn.recv() + "\n")
+        print(self.conn.recv() + "\n")
 
     def bl_send(self, data):
         utils.send_data(self.socket, data)
