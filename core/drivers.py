@@ -1,5 +1,4 @@
 import core.bootstrap as bootstrap
-import importlib
 
 class DriverLoader:
     def __init__(self):

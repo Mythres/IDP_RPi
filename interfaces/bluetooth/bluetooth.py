@@ -41,8 +41,6 @@ class Bluetooth:
                                 self.send(command)
                             else:
                                 print("Received invalid assignment.\n")
-                        elif len(command_split) > 1 and command_split[0] == "send":
-                            self.send(command)
                         elif command == "quit" or command == "exit":
                             self.send("exit")
                             sys.exit()
@@ -51,6 +49,8 @@ class Bluetooth:
                                 self.bl_send(self.conn.recv())
                         else:
                             self.send(command)
+                    elif len(command_split) > 1 and command_split[0] == "send":
+                        self.send(command)
                     else:
                         print("Received invalid command\n")
 

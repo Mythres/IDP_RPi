@@ -1,6 +1,6 @@
+import interfaces.cli.utils.utils as utils
 import interfaces.constants as constants
 import sys
-import utils.utils as utils
 
 
 class Cli:
@@ -17,17 +17,13 @@ class Cli:
             command = input("=> ")
             command_split = command.split(" ")
             command_params = command_split[0] + "/" + str(len(command_split))
-            
+
             if command_params in self.commands:
-                if len(command_split) > 1:
+                if len(command_split) > 1 and command_split[0] == "load":
                     if command_split[1] in self.assignment_mods.keys():
                         self.send(command)
                     else:
-                        print("Invalid assignment.\n")
-                elif command == "help":
-                    utils.print_list(self.commands, "\nAvailable commands:")
-                    utils.print_dict_keys(self.assignment_mods, "\nAvailable assignments:")
-                    print()
+                        print("Received invalid assignment.\n")
                 elif command == "quit" or command == "exit":
                     self.send("exit")
                     sys.exit()
@@ -36,8 +32,10 @@ class Cli:
                         print(self.conn.recv())
                 else:
                     self.send(command)
+            elif len(command_split) > 1 and command_split[0] == "send":
+                self.send(command)
             else:
-                print("Invalid command\n")
+                print("Received invalid command\n")
 
     def send(self, command):
         self.conn.send(command)

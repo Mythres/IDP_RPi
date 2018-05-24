@@ -34,13 +34,17 @@ class Controller:
                 elif received[0] == "stop":
                     self.stop()
                 elif received[0] == "send":
-                    self.send(received[1])
+                    self.send("".join(received[1:]))
 
             if self.started and self.assignment_conn.poll():
                 received = self.assignment_conn.recv()
                 self.interface_conn.send(received)
 
     def load(self, assignment):
+        if self.assignment is not None:
+            self.interface_conn.send("An assignment has already been loaded.")
+            return
+
         self.assignment = importlib.import_module("assignments." + assignment + "." + assignment)
         self.assignment.load()
         self.interface_conn.send(assignment + " loaded.")
@@ -68,10 +72,13 @@ class Controller:
     def start(self):
         if self.assignment is None:
             self.interface_conn.send("Please load an assignment first.")
+        elif self.started == True:
+            self.interface_conn.send("The assignment has already started.")
+            return
         elif self.assignment_conn is not None:
             self.assignment_conn.send("Run")
             while self.assignment_conn.recv() != "Started":
-                    continue
+                continue
             self.started = True
             self.interface_conn.send(self.assignment.name() + " started.")
         else:
