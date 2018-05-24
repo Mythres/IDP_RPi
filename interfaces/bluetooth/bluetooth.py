@@ -3,6 +3,7 @@ import interfaces.constants as constants
 import interfaces.bluetooth.utils.utils as utils
 import sys
 
+from time import sleep
 
 class Bluetooth:
     def __init__(self, assignment_mods, conn):
@@ -46,6 +47,7 @@ class Bluetooth:
                             sys.exit()
                         elif command == "read":
                             while self.conn.poll():
+                                sleep(0.5)
                                 self.bl_send(self.conn.recv())
                         else:
                             self.send(command)

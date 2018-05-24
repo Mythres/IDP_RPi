@@ -7,6 +7,7 @@ def get_socket(mac_address):
 
 def send_data(socket, data):
     socket.send(bytes(str(len(data)), "utf-8") + b"|" + bytes(data, "utf-8") + b';')
+    print("Sent: " + str(len(data)) + "|" + data + ";")
 
 def check_data(data):
     commands = data.split(";")

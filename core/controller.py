@@ -63,7 +63,7 @@ class Controller:
                 self.assignment.unload()
             else:
                 self.assignment_conn.send("Unload")
-                while self.assignment_conn.recv() != "Unloaded" and wait:
+                while wait and self.assignment_conn.recv() != "Unloaded":
                     continue
             
             assignment = self.assignment 
