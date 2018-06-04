@@ -3,50 +3,43 @@ import assignments.ass1.ax12.ax12 as ax12
 import utils.communication as comm
 from time import sleep
 
-class Ass1:
-    def __init__(self):
-        self.name = "ass1"
-        self.conn = None
-        self.is_stopped = False
-        self.servos = ax12.Ax12()
-        self.moving = False
+commands = ["start", "stop", "unload"]
 
-    def run(self, conn):
+class Monitoring:
+    def __init__(self, conn):
         self.conn = conn
-        comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
+        self.is_stopped = True
+        self.servos = ax12.Ax12()
 
+    def run(self):
         while True:
             self.handleMessages()
-            if self.moving:
+            sending = ""
+            for id in range(1,3):
                 try:
-                    self.servos.move(1, 100)
-                    self.servos.move(2, 100)
-
-                    sleep(2)
-
-                    self.servos.move(1, 1000)
-                    self.servos.move(2, 1000)
-                    sleep(2)
-
+                    temp = str(10)  # str(self.servos.readTemperature(id))
+                    pos = str(20) # str(self.servos.readPosition(id))
+                    #print("Position: " + pos + ", Temperature: " + temp)
+                    sending += str(id) + ":" + temp + ","
+                    sending += str(id) + ":" + pos
+                    sending += "-"
                 except self.servos.timeoutError:
                     comm.send_msg(self.conn, comm.MsgTypes.ERROR, "Servo not found.")
-            else:
-                sleep(2)
+
+            comm.send_msg(self.conn, comm.MsgTypes.STATUS, sending[:-1])
+
+            sleep(0.5)
 
     def handleMessages(self):
         if self.conn.poll():
             received = comm.recv_msg(self.conn)
             if received == "Stop":
-                print("received stop")
                 self.is_stopped = True
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Stopped")
             elif received == "Unload":
                 self.unload()
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Unloaded")
                 sys.exit()
-            elif received == "turn":
-                comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
-                self.moving = True;
 
         while self.is_stopped:
             received = comm.recv_msg(self.conn)
@@ -61,21 +54,12 @@ class Ass1:
     def unload(self):
         i = 1
 
-ass1 = None
-
-def name():
-    return ass1.name
-
-def load():
-    global ass1
-    ass1 = Ass1()
-
-def unload():
-    i = 0
+monitoring = None
 
 def start(conn):
     try:
-        ass1.run(conn)
+        monitoring = Monitoring(conn)
+        monitoring.run()
     except KeyboardInterrupt:
-        ass1.unload()
+        monitoring.unload()
         sys.exit(1)

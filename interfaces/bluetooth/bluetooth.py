@@ -1,6 +1,8 @@
 import bluetooth
 import interfaces.constants as constants
 import interfaces.bluetooth.utils.utils as utils
+import monitoring.monitoring as monitoring
+import utils.communication as comm
 import sys
 
 from time import sleep
@@ -42,26 +44,31 @@ class Bluetooth:
                                 self.send(command)
                             else:
                                 print("Received invalid assignment.\n")
+                        if len(command_split) > 1 and command_split[0] == "monitoring":
+                            if command_split[1] in monitoring.commands:
+                                self.send(command)
+                            else:
+                                print("Received invalid monitoring command.\n")
                         elif command == "quit" or command == "exit":
                             self.send("exit")
                             sys.exit()
                         elif command == "read":
                             while self.conn.poll():
                                 sleep(0.5)
-                                self.bl_send(self.conn.recv())
+                                self.bl_send(comm.recv_msg(self.conn))
                         else:
                             self.send(command)
                     elif len(command_split) > 1 and command_split[0] == "send":
                         self.send(command)
                     else:
-                        print("Received invalid command\n")
+                        print("Received invalid command.\n")
 
             except IOError:
                 pass
 
     def send(self, command):
-        self.conn.send(command)
-        self.bl_send(self.conn.recv())
+        comm.send_msg(self.conn, comm.MsgTypes.COMMAND, command)
+        self.bl_send(comm.recv_msg(self.conn, comm.MsgTypes.REPLY))
 
     def bl_send(self, data):
         utils.send_data(self.socket, data)

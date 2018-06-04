@@ -1,5 +1,7 @@
 import interfaces.cli.utils.utils as utils
 import interfaces.constants as constants
+import monitoring.monitoring as monitoring
+import utils.communication as comm
 import sys
 
 
@@ -24,22 +26,32 @@ class Cli:
                         self.send(command)
                     else:
                         print("Received invalid assignment.\n")
+                elif len(command_split) > 1 and command_split[0] == "monitoring":
+                    if command_split[1] in monitoring.commands:
+                        self.send(command)
+                    else:
+                        print("Received invalid monitoring command.\n")
+
                 elif command == "quit" or command == "exit":
                     self.send("exit")
                     sys.exit()
                 elif command == "read":
                     while self.conn.poll():
-                        print(self.conn.recv())
+                        print(comm.recv_msg(self.conn))
+                elif command == "help":
+                    utils.print_dict_keys(self.assignment_mods, "Available assignments:")
+                    print()
+                    utils.print_list(self.commands, "Available commands:")
                 else:
                     self.send(command)
             elif len(command_split) > 1 and command_split[0] == "send":
                 self.send(command)
             else:
-                print("Received invalid command\n")
+                print("Received invalid command.\n")
 
     def send(self, command):
-        self.conn.send(command)
-        print(self.conn.recv() + "\n")
+        comm.send_msg(self.conn, comm.MsgTypes.COMMAND, command)
+        print(comm.recv_msg(self.conn, comm.MsgTypes.REPLY) + "\n")
 
 
 def start(assignment_mods, conn):
