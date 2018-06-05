@@ -1,6 +1,7 @@
 import sys
 import assignments.ass1.ax12.ax12 as ax12
 import utils.communication as comm
+import serial
 from time import sleep
 
 class Ass1:
@@ -10,6 +11,7 @@ class Ass1:
         self.is_stopped = False
         self.servos = ax12.Ax12()
         self.moving = False
+        self.serial = serial.Serial("/dev/ttyUSB0")
 
     def run(self, conn):
         self.conn = conn
@@ -30,14 +32,17 @@ class Ass1:
 
                 except self.servos.timeoutError:
                     comm.send_msg(self.conn, comm.MsgTypes.ERROR, "Servo not found.")
-            else:
-                sleep(2)
 
     def handleMessages(self):
         if self.conn.poll():
             received = comm.recv_msg(self.conn)
+            received_split = received.split(" ")
+            if received_split[0] == "controller":
+                controller_values = ",".join(received_split[1:]) + ";"
+                self.serial.write(bytes(controller_values, "utf-8"))
+                comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
+
             if received == "Stop":
-                print("received stop")
                 self.is_stopped = True
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Stopped")
             elif received == "Unload":

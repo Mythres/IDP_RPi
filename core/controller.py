@@ -37,7 +37,7 @@ class Controller:
                 elif received[0] == "stop":
                     self.stop()
                 elif received[0] == "send":
-                    self.send("".join(received[1:]))
+                    self.send(" ".join(received[1:]))
                 elif received[0] == "monitoring":
                     self.monitoring(received[1])
 

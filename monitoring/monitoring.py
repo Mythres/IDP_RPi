@@ -28,7 +28,7 @@ class Monitoring:
 
             comm.send_msg(self.conn, comm.MsgTypes.STATUS, sending[:-1])
 
-            sleep(0.5)
+            sleep(0.7)
 
     def handleMessages(self):
         if self.conn.poll():

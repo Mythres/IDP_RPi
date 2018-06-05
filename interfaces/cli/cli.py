@@ -37,7 +37,7 @@ class Cli:
                     sys.exit()
                 elif command == "read":
                     while self.conn.poll():
-                        print(comm.recv_msg(self.conn))
+                        print(comm.recv_msg(self.conn, strip_header=False))
                 elif command == "help":
                     utils.print_dict_keys(self.assignment_mods, "Available assignments:")
                     print()

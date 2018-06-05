@@ -54,8 +54,7 @@ class Bluetooth:
                             sys.exit()
                         elif command == "read":
                             while self.conn.poll():
-                                sleep(0.5)
-                                self.bl_send(comm.recv_msg(self.conn))
+                                self.bl_send(comm.recv_msg(self.conn, strip_header=False))
                         else:
                             self.send(command)
                     elif len(command_split) > 1 and command_split[0] == "send":
@@ -63,12 +62,13 @@ class Bluetooth:
                     else:
                         print("Received invalid command.\n")
 
+                    self.bl_send("2|Received")
+
             except IOError:
                 pass
 
     def send(self, command):
         comm.send_msg(self.conn, comm.MsgTypes.COMMAND, command)
-        self.bl_send(comm.recv_msg(self.conn, comm.MsgTypes.REPLY))
 
     def bl_send(self, data):
         utils.send_data(self.socket, data)

@@ -19,7 +19,7 @@ def send_msg(conn, msg_type, msg):
     conn.send(str(msg_type.value) + "|" + msg)
 
 
-def recv_msg(conn, msg_type=None):
+def recv_msg(conn, msg_type=None, strip_header=True,):
     received = ""
     received_split = ["-1", ""]
 
@@ -36,4 +36,7 @@ def recv_msg(conn, msg_type=None):
 
             received_split = received.split("|")
 
-    return received_split[1]
+    if strip_header:
+        return received_split[1]
+    else:
+        return received
