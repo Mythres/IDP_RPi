@@ -1,8 +1,11 @@
 import sys
-import assignments.ass1.ax12.ax12 as ax12
-import utils.communication as comm
-import serial
 from time import sleep
+
+import serial
+
+import drivers.ax12.ax12 as ax12
+import utils.communication as comm
+
 
 class Ass1:
     def __init__(self):

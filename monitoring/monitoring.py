@@ -1,7 +1,8 @@
 import sys
-import assignments.ass1.ax12.ax12 as ax12
-import utils.communication as comm
 from time import sleep
+
+import drivers.ax12.ax12 as ax12
+import utils.communication as comm
 
 commands = ["start", "stop", "unload"]
 
