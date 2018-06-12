@@ -18,10 +18,12 @@ INPUT_FRAMES_PER_BLOCK = int(RATE * INPUT_BLOCK_TIME)
 
 # Update leds on the Raspberry Pi
 def update_led(avglow, avgmid, avghigh):
+    #TODO led code
     {}
 
 
 def update_servos():
+    #TODO servo code
     {}
 
 
@@ -195,15 +197,9 @@ class ass4:
             except IOError as e:
                 print("(%d) Error recording: %s" % e)
 
-
     def handleMessages(self):
         if self.conn.poll():
             received = comm.recv_msg(self.conn)
-            received_split = received.split(" ")
-            if received_split[0] == "controller":
-                controller_values = ",".join(received_split[1:]) + ";"
-                self.serial.write(bytes(controller_values, "utf-8"))
-                comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
 
             if received == "Stop":
                 self.is_stopped = True
@@ -212,9 +208,6 @@ class ass4:
                 self.unload()
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Unloaded")
                 sys.exit()
-            elif received == "turn":
-                comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
-                self.moving = True;
 
         while self.is_stopped:
             received = comm.recv_msg(self.conn)
@@ -227,7 +220,7 @@ class ass4:
                 sys.exit()
 
     def unload(self):
-        i = 1
+        {}
 
 linedance = None
 
