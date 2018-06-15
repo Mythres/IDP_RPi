@@ -5,6 +5,7 @@ import math
 import numpy as np
 import librosa
 import time
+from neopixel import *
 
 # Setup
 FORMAT = pyaudio.paInt16
@@ -15,11 +16,70 @@ INPUT_BLOCK_TIME = 0.05
 CHUNK = 4096  # number of data points to read at a time
 INPUT_FRAMES_PER_BLOCK = int(RATE * INPUT_BLOCK_TIME)
 
+print("hello")
 
-# Update leds on the Raspberry Pi
-def update_led(avglow, avgmid, avghigh):
-    #TODO led code
-    {}
+beats_per_minute = 0
+time_to_next_beat = 0
+original_time_to_next_beat = 0
+analyzing = True
+
+LED_COUNT = 30
+LED_PIN = 18
+LED_FREQ_HZ = 800000
+LED_DMA = 10
+LED_BRIGHTNESS = 50
+LED_INVERT = False
+LED_CHANNEL = 0
+
+
+# Update leds on the Raspberry Pi (G/R/B)
+def update_led(strip, avglow, avgmid, avghigh):
+    for i in range(strip.numPixels()):
+
+        # Low
+        if i < 10:
+            if i < (avglow - 40) / 2:
+                if i < 6:
+                    strip.setPixelColor(i, Color(255, 0, 0))
+                elif 9 > i > 5:
+                    strip.setPixelColor(i, Color(255, 255, 0))
+                elif i is 9:
+                    strip.setPixelColor(i, Color(0, 255, 0))
+
+            else:
+                strip.setPixelColor(i, Color(0, 0, 0))
+
+        # Mid
+        if 20 > i > 10:
+
+            # 21 < 30
+            if i < (avgmid - 35) * 2:
+                if i < 16:
+                    strip.setPixelColor(i, Color(255, 0, 0))
+                elif 19 > i > 15:
+                    strip.setPixelColor(i, Color(255, 255, 0))
+                elif i is 19:
+                    strip.setPixelColor(i, Color(0, 255, 0))
+
+            else:
+                strip.setPixelColor(i, Color(0, 0, 0))
+
+        # High
+        if 30 > i > 20:
+            if i < (avghigh - 20) * 2:
+                if i < 26:
+                    strip.setPixelColor(i, Color(255, 0, 0))
+                elif 29 > i > 25:
+                    strip.setPixelColor(i, Color(255, 255, 0))
+                elif i is 29:
+                    strip.setPixelColor(i, Color(0, 255, 0))
+
+            else:
+                strip.setPixelColor(i, Color(0, 0, 0))
+
+
+        strip.show()
+        # time.sleep(50/1000)
 
 
 def update_servos():
@@ -55,10 +115,10 @@ def callback(in_data, frame_count, time_info, status):
     if tempo < 70:
         tempo *= 2
 
-    print("registered tempo: ")
-    print(tempo)
-    print("registered beats: ")
-    print(beats)
+    # print("registered tempo: ")
+    # print(tempo)
+    # print("registered beats: ")
+    # print(beats)
 
     # Calculate difference of calculated tempo with global beats per minute
     difference = abs(beats_per_minute - tempo)
@@ -72,12 +132,12 @@ def callback(in_data, frame_count, time_info, status):
     # Toggle analyzing after first iteration
     analyzing = False
 
-    print('Estimated tempo: {:0.2f} beats per minute'.format(tempo))
+    # print('Estimated tempo: {:0.2f} beats per minute'.format(tempo))
 
     return None, pyaudio.paContinue
 
 
-def parse_audio(audio_input_data):
+def parse_audio(audio_input_data, strip):
     # Decibel arrays for each frequency range
     low_freq = []
     mid_freq = []
@@ -122,7 +182,7 @@ def parse_audio(audio_input_data):
     high_avg = np.mean(return_db(high_freq))
 
     # Update leds
-    update_led(low_avg, mid_avg, high_avg)
+    update_led(strip, low_avg, mid_avg, high_avg)
 
     # print("Low Average db: ")
     # print(low_avg)
@@ -134,7 +194,7 @@ def parse_audio(audio_input_data):
     # print(high_avg)
 
 
-class ass4:
+class Linedance:
     def __init__(self):
         self.name = "linedance"
         self.conn = None
@@ -144,41 +204,53 @@ class ass4:
         self.time_to_next_beat = 0
         self.original_time_to_next_beat = 0
         self.analyzing = True
+        self.stream = None
+        self.stream2 = None
+        self.pa = None
+        self.lib = None
+        self.strip = None
 
     def run(self, conn):
         global time_to_next_beat
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
 
-        # Initiate pyaudio and set settings
-        pa = pyaudio.PyAudio()
-        lib = pyaudio.PyAudio()
+        # Initiate neopixel led strip
+        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+        self.strip.begin()
 
-        stream = pa.open(format=FORMAT,
+        # Initiate pyaudio and set settings
+        self.pa = pyaudio.PyAudio()
+        self.lib = pyaudio.PyAudio()
+
+        self.stream = self.pa.open(format=FORMAT,
                          channels=CHANNELS,
+                         # input_device_index=0,
                          rate=RATE,
                          input=True,
                          frames_per_buffer=CHUNK
                          )
 
-        stream2 = lib.open(format=pyaudio.paFloat32,
+        self.stream2 = self.lib.open(format=pyaudio.paFloat32,
                            channels=1,
                            rate=44100,
+                           # input_device_index=0,
                            input=True,
                            output=False,
                            frames_per_buffer=int(44100 * 10),
                            stream_callback=callback)
 
         # start the stream (4)
-        stream.start_stream()
-        stream2.start_stream()
+        self.stream.start_stream()
+        self.stream2.start_stream()
 
         while True:
+            self.handleMessages()
             try:
-                capture_time = time.time()
+                capture_time = time.time()                    # print("analyzing beat")
 
-                audio_data = np.fromstring(stream.read(CHUNK), dtype=np.int16)
-                parse_audio(audio_data)
+                audio_data = np.fromstring(self.stream.read(CHUNK), dtype=np.int16)
+                parse_audio(audio_data, self.strip)
 
                 capture_time_2 = time.time()
                 time_to_next_beat -= capture_time_2 - capture_time
@@ -187,10 +259,11 @@ class ass4:
                 # print(time_to_next_beat)
 
                 if time_to_next_beat < 0.05 and analyzing != True:
-                    print("beat!")
+                    # print("beat!")
                     time_to_next_beat = original_time_to_next_beat
                 elif analyzing:
-                    print("analyzing beat")
+                    {}
+                    # print("analyzing beat")
 
             except KeyboardInterrupt:
                 Looper = False
@@ -220,7 +293,15 @@ class ass4:
                 sys.exit()
 
     def unload(self):
-        {}
+        # stop stream (6)
+        self.stream.stop_stream()
+        self.stream2.stop_stream()
+        self.stream.close()
+        self.stream2.close()
+
+        # close PyAudio (7)
+        self.pa.terminate()
+        self.lib.terminate()
 
 linedance = None
 
@@ -230,11 +311,11 @@ def name():
 
 def load():
     global linedance
-    linedance = linedance()
+    linedance = Linedance()
 
 
 def unload():
-    i = 0
+    {}
 
 
 def start(conn):
