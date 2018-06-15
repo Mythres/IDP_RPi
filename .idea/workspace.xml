@@ -2,19 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2a77ecd-48ce-4735-b887-1b997080f5d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assignments/ass1/test_servo.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/servo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/IDP_RPi.iml" afterPath="$PROJECT_DIR$/.idea/IDP_RPi.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/.sconsign.dblite" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/dma.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/libws2811.a" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/mailbox.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/main.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pcm.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pwm.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/rpihw.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/test" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/ws2811.o" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/DEBIAN/control" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/DEBIAN/postinst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/DEBIAN/postrm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/DEBIAN/prerm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/SConscript" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/SConstruct" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/clk.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/dma.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/dma.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/golang/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/golang/examples/basic.go" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/golang/ws2811/ws2811.go" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/golang/ws2811/ws2811.go.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/gpio.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/linux.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/mailbox.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/mailbox.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/main.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pcm.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pcm.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pwm.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/pwm.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/SK6812_lowlevel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/SK6812_strandtest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/SK6812_white_test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/lowlevel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/multistrandtest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/neopixelclock.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/strandtest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/ez_setup.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/neopixel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/rpi_ws281x.i" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/setup.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/rpihw.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/rpihw.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/version" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/version.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/version.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/ws2811.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/ws2811.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignments/ass1/ass1.py" afterPath="$PROJECT_DIR$/assignments/ass1/ass1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignments/linedance/linedance.py" afterPath="$PROJECT_DIR$/assignments/linedance/linedance.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/strandtest.py" afterPath="$PROJECT_DIR$/drivers/rpi_ws281x/python/examples/strandtest.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
+    <list id="960bd70b-92ca-47b5-8351-72f6ae667d03" name="Revert: Audio code further integrated + led code + led library" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/assignments/linedance/linedance.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="54" column="21" lean-forward="true" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+              <caret line="54" column="21" lean-forward="false" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -38,8 +83,8 @@
       <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+            <state relative-caret-position="102">
+              <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -80,6 +125,12 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Yosu0515 &lt;josdevries1989@live.nl&gt;" />
+      </list>
+    </option>
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -101,6 +152,7 @@
         <option value="$PROJECT_DIR$/assignments/assignment.py" />
         <option value="$PROJECT_DIR$/assignments/ass1/ass1.py" />
         <option value="$PROJECT_DIR$/assignments/linedance/linedance.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -159,6 +211,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="drivers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDP_RPi_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDP_RPi_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drivers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rpi_ws281x" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDP_RPi_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDP_RPi_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="assignments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -196,6 +280,116 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\JDV\Desktop\IDP - Core\IDP_RPi\drivers" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/drivers/rpi_ws281x</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -285,23 +479,38 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a2a77ecd-48ce-4735-b887-1b997080f5d5" name="Default" comment="" />
+      <changelist id="960bd70b-92ca-47b5-8351-72f6ae667d03" name="Revert: Audio code further integrated + led code + led library" comment="" />
       <created>1527675282239</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1527675282239</updated>
     </task>
+    <task id="LOCAL-00001" summary="Audio code further integrated + led code + led library">
+      <created>1529072678093</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1529072678093</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Audio code further integrated + led code + led library">
+      <created>1529073561553</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1529073561553</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18336888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38244852" sideWeight="0.5042644" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38244852" sideWeight="0.50852877" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38244852" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38244852" sideWeight="0.4914712" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -325,6 +534,7 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="SHOW_DETAILS_IN_CHANGES" value="false" />
               <option name="RECENTLY_FILTERED_USER_GROUPS">
                 <collection />
               </option>
@@ -347,6 +557,13 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/drivers/rpi_ws281x" />
+    </ignored-roots>
+    <MESSAGE value="Audio code further integrated + led code + led library" />
+    <option name="LAST_COMMIT_MESSAGE" value="Audio code further integrated + led code + led library" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -408,15 +625,23 @@
     <entry file="file://$PROJECT_DIR$/assignments/linedance/linedance.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="54" column="21" lean-forward="true" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+          <caret line="54" column="21" lean-forward="false" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/drivers/rpi_ws281x/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+        <state relative-caret-position="102">
+          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>
