@@ -55,7 +55,7 @@ class Ass1:
                 sys.exit()
             elif received == "turn":
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
-                self.moving = True;
+                self.moving = True
 
         while self.is_stopped:
             received = comm.recv_msg(self.conn)
