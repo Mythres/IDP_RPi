@@ -1,4 +1,6 @@
-librosa
+llvmlite==0.15.0
+resampy==0.1.5
+librosa==0.5.1
 numpy
 pyaudio
 RPi.GPIO

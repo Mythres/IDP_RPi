@@ -14,7 +14,7 @@ class Ass1:
         self.is_stopped = False
         self.servos = ax12.Ax12()
         self.moving = False
-        self.serial = serial.Serial("/dev/ttyUSB0")
+        self.serial = serial.Serial("/dev/ttyACM0")
 
     def run(self, conn):
         self.conn = conn
@@ -42,6 +42,7 @@ class Ass1:
             received_split = received.split(" ")
             if received_split[0] == "controller":
                 controller_values = ",".join(received_split[1:]) + ";"
+                print(received_split)
                 self.serial.write(bytes(controller_values, "utf-8"))
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
 
