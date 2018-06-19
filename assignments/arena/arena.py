@@ -2,15 +2,17 @@ import sys
 import time
 import utils.communication as comm
 import drivers.Motor.motor as motor
+import serial
 
 
-class Motor:
+class Arena:
     def __init__(self):
-        self.name = "motor"
+        self.name = "arena"
         self.conn = None
         self.is_stopped = False
-        self.left_joy_xpos = None
-        self.right_joy_xpos = None
+        self.left_joy_xpos = 512
+        self.right_joy_xpos = 512
+        self.serial = serial.Serial("/dev/ttyACM0")
 
     def run(self, conn):
         self.conn = conn
@@ -20,24 +22,27 @@ class Motor:
         while True:
             self.handleMessages()
 
-            motor_values = ""
-            motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)
+            # Update arena
+            left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)
 
-            # Update motor
-            left_speed, left_polarity, right_speed, right_polarity = motor.update(self.left_joy_xpos, self.right_joy_xpos)
+            motor_values = str(int(round(left_speed))) + "," + str(left_polarity) + "," + str(int(round(right_speed))) + "," + str(right_polarity)
 
-            motor_values.append(left_speed + "," + left_polarity + "," + right_speed + "," + right_polarity + ";")
+            comm.send_msg(self.conn, comm.MsgTypes.STATUS, motor_values)
 
             # Write to serial
             self.serial.write(bytes(motor_values, "utf-8"))
+
+            time.sleep(0.1)
 
     def handleMessages(self):
         if self.conn.poll():
             received = comm.recv_msg(self.conn)
             received_split = received.split(" ")
             if received_split[0] == "controller":
-                controller_values = ",".join(received_split[1:]) + ";"
+                controller_values = received_split[1].split(",")
                 print(received_split)
+
+                print(controller_values)
 
                 # Grab positions
                 self.left_joy_xpos = int(controller_values[0].split(":")[1])
@@ -66,16 +71,16 @@ class Motor:
         {}
 
 
-motor = None
+arena = None
 
 
 def name():
-    return motor.name
+    return arena.name
 
 
 def load():
-    global motor
-    motor = Motor()
+    global arena
+    arena = Arena()
 
 
 def unload():
@@ -84,7 +89,7 @@ def unload():
 
 def start(conn):
     try:
-        motor.run(conn)
+        arena.run(conn)
     except KeyboardInterrupt:
-        motor.unload()
+        arena.unload()
         sys.exit(1)
