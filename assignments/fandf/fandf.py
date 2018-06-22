@@ -3,34 +3,16 @@ import time
 import utils.communication as comm
 import drivers.Motor.motor as motor
 import serial
-from neopixel import *
-
-LED_COUNT = 20
-LED_PIN = 18
-LED_FREQ_HZ = 800000
-LED_DMA = 10
-LED_BRIGHTNESS = 50
-LED_INVERT = False
-LED_CHANNEL = 0
 
 
-def update_led(strip):
-    #TODO Make led code for enter the arena
-    {}
-
-
-class Arena:
+class Fandf:
     def __init__(self):
-        self.name = "arena"
+        self.name = "fandf"
         self.conn = None
         self.is_stopped = False
         self.left_joy_xpos = 512
         self.right_joy_xpos = 512
         self.serial = serial.Serial("/dev/ttyACM0")
-
-        # Initiate neopixel led strip
-        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-        self.strip.begin()
 
     def run(self, conn):
         self.conn = conn
@@ -89,16 +71,16 @@ class Arena:
         {}
 
 
-arena = None
+fandf = None
 
 
 def name():
-    return arena.name
+    return fandf.name
 
 
 def load():
-    global arena
-    arena = Arena()
+    global fandf
+    fandf = Fandf()
 
 
 def unload():
@@ -107,7 +89,7 @@ def unload():
 
 def start(conn):
     try:
-        arena.run(conn)
+        fandf.run(conn)
     except KeyboardInterrupt:
-        arena.unload()
+        fandf.unload()
         sys.exit(1)

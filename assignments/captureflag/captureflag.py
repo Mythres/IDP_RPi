@@ -3,34 +3,16 @@ import time
 import utils.communication as comm
 import drivers.Motor.motor as motor
 import serial
-from neopixel import *
-
-LED_COUNT = 20
-LED_PIN = 18
-LED_FREQ_HZ = 800000
-LED_DMA = 10
-LED_BRIGHTNESS = 50
-LED_INVERT = False
-LED_CHANNEL = 0
 
 
-def update_led(strip):
-    #TODO Make led code for enter the arena
-    {}
-
-
-class Arena:
+class Captureflag:
     def __init__(self):
-        self.name = "arena"
+        self.name = "captureflag"
         self.conn = None
         self.is_stopped = False
         self.left_joy_xpos = 512
         self.right_joy_xpos = 512
         self.serial = serial.Serial("/dev/ttyACM0")
-
-        # Initiate neopixel led strip
-        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-        self.strip.begin()
 
     def run(self, conn):
         self.conn = conn
@@ -39,6 +21,8 @@ class Arena:
 
         while True:
             self.handleMessages()
+
+            # TODO: Arm controls
 
             # Update motor
             left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)
@@ -89,16 +73,16 @@ class Arena:
         {}
 
 
-arena = None
+captureflag = None
 
 
 def name():
-    return arena.name
+    return captureflag.name
 
 
 def load():
-    global arena
-    arena = Arena()
+    global captureflag
+    captureflag = Captureflag()
 
 
 def unload():
@@ -107,7 +91,7 @@ def unload():
 
 def start(conn):
     try:
-        arena.run(conn)
+        captureflag.run(conn)
     except KeyboardInterrupt:
-        arena.unload()
+        captureflag.unload()
         sys.exit(1)

@@ -5,7 +5,8 @@ import drivers.Motor.motor as motor
 import serial
 from neopixel import *
 
-LED_COUNT = 20
+# TODO: Define how many leds for the dance
+LED_COUNT = {}
 LED_PIN = 18
 LED_FREQ_HZ = 800000
 LED_DMA = 10
@@ -15,13 +16,13 @@ LED_CHANNEL = 0
 
 
 def update_led(strip):
-    #TODO Make led code for enter the arena
+    #TODO Make led code for dance
     {}
 
 
-class Arena:
+class Dance:
     def __init__(self):
-        self.name = "arena"
+        self.name = "dance"
         self.conn = None
         self.is_stopped = False
         self.left_joy_xpos = 512
@@ -35,13 +36,13 @@ class Arena:
     def run(self, conn):
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
-        motor_driver = motor.Motor()
 
         while True:
             self.handleMessages()
 
-            # Update motor
-            left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)
+            # TODO: Code dance and give values to serial.write for motor
+
+            # TODO: Arm controls
 
             motor_values = str(int(round(left_speed))) + "," + str(left_polarity) + "," + str(int(round(right_speed))) + "," + str(right_polarity)
 
@@ -55,18 +56,7 @@ class Arena:
     def handleMessages(self):
         if self.conn.poll():
             received = comm.recv_msg(self.conn)
-            received_split = received.split(" ")
-            if received_split[0] == "controller":
-                controller_values = received_split[1].split(",")
-                print(received_split)
-
-                print(controller_values)
-
-                # Grab positions
-                self.left_joy_xpos = int(controller_values[0].split(":")[1])
-                self.right_joy_xpos = int(controller_values[1].split(":")[1])
-
-                comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
+            comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
             if received == "Stop":
                 self.is_stopped = True
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Stopped")
@@ -89,16 +79,16 @@ class Arena:
         {}
 
 
-arena = None
+dance = None
 
 
 def name():
-    return arena.name
+    return dance.name
 
 
 def load():
-    global arena
-    arena = Arena()
+    global dance
+    dance = Dance()
 
 
 def unload():
@@ -107,7 +97,7 @@ def unload():
 
 def start(conn):
     try:
-        arena.run(conn)
+        dance.run(conn)
     except KeyboardInterrupt:
-        arena.unload()
+        dance.unload()
         sys.exit(1)

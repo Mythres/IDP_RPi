@@ -16,8 +16,6 @@ INPUT_BLOCK_TIME = 0.05
 CHUNK = 4096  # number of data points to read at a time
 INPUT_FRAMES_PER_BLOCK = int(RATE * INPUT_BLOCK_TIME)
 
-#print("hello")
-
 beats_per_minute = 0
 time_to_next_beat = 0
 original_time_to_next_beat = 0
@@ -247,7 +245,8 @@ class Linedance:
         while True:
             self.handleMessages()
             try:
-                capture_time = time.time()                    # print("analyzing beat")
+                capture_time = time.time()
+                # print("analyzing beat")
 
                 audio_data = np.fromstring(self.stream.read(CHUNK), dtype=np.int16)
                 parse_audio(audio_data, self.strip)
