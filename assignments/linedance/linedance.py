@@ -16,7 +16,7 @@ INPUT_BLOCK_TIME = 0.05
 CHUNK = 4096  # number of data points to read at a time
 INPUT_FRAMES_PER_BLOCK = int(RATE * INPUT_BLOCK_TIME)
 
-print("hello")
+#print("hello")
 
 beats_per_minute = 0
 time_to_next_beat = 0

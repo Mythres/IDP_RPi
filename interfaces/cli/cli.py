@@ -1,5 +1,5 @@
 import interfaces.cli.utils.utils as utils
-import interfaces.constants as constants
+import constants
 import monitoring.monitoring as monitoring
 import utils.communication as comm
 import sys

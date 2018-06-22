@@ -30,7 +30,7 @@ class Arena:
             comm.send_msg(self.conn, comm.MsgTypes.STATUS, motor_values)
 
             # Write to serial
-            self.serial.write(bytes(motor_values, "utf-8"))
+            self.serial.write(bytes(motor_values + ";", "utf-8"))
 
             time.sleep(0.1)
 

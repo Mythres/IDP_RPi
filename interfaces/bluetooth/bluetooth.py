@@ -1,5 +1,5 @@
 import bluetooth
-import interfaces.constants as constants
+import constants
 import interfaces.bluetooth.utils.utils as utils
 import monitoring.monitoring as monitoring
 import utils.communication as comm

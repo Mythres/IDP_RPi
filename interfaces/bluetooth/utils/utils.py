@@ -26,8 +26,12 @@ def recv_data(socket):
     data = ""
     commands = []
 
+    socket.settimeout(1.0)
+
     while "|" not in data:
         data += socket.recv(1024).decode("utf-8", errors="ignore")
+        if data == "":
+            raise TimeoutError
 
     while not check_data(data):
         data += socket.recv(1024).decode("utf-8", errors="ignore")
@@ -36,5 +40,5 @@ def recv_data(socket):
         if len(command) != 0:
             command_split = command.split("|")
             commands.append(command_split[1])
-
+    print("done")
     return commands

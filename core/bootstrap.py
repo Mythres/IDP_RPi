@@ -2,13 +2,14 @@ import argparse
 import importlib
 import os
 import sys
+import constants
 
 def bootstrap_interface():
     interface_mods = dict()
     interface_mods_help = ""
     counter = 1
 
-    for dir_entry in os.scandir("./interfaces"):
+    for dir_entry in os.scandir(constants.ROOT_DIR + "/interfaces"):
         if dir_entry.is_dir() and "__" not in dir_entry.name:
             mod_name = dir_entry.path.split('/')[-1]
             interface_mods[mod_name] = importlib.import_module("interfaces." + mod_name + "." + mod_name)
@@ -26,7 +27,7 @@ def bootstrap_interface():
 def bootstrap_assignments():
     assignment_mods = dict()
 
-    for dir_entry in os.scandir("./assignments"):
+    for dir_entry in os.scandir(constants.ROOT_DIR + "/assignments"):
         if dir_entry.is_dir() and "__" not in dir_entry.name:
             mod_name = dir_entry.path.split('/')[-1]
             assignment_mods[mod_name] = importlib.import_module("assignments." + mod_name + "." + mod_name)
@@ -36,7 +37,7 @@ def bootstrap_assignments():
 def bootstrap_drivers():
     driver_mods = dict()
 
-    for dir_entry in os.scandir("./drivers"):
+    for dir_entry in os.scandir(constants.ROOT_DIR + "/drivers"):
         if dir_entry.is_dir() and "__" not in dir_entry.name:
             mod_name = dir_entry.path.split('/')[-1]
             driver_mods[mod_name] = importlib.import_module("drivers." + mod_name + "." + mod_name)

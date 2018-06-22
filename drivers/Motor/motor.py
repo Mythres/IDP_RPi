@@ -2,25 +2,26 @@ class Motor:
 
     def __init__(self):
         # Init motor variables
-        self.max_speed = 160
-        self.max_speed_increase = 30
+        self.max_speed = 250
+        self.max_speed_increase = 40
         self.median_pos = 512
         self.left_speed = 0
         self.right_speed = 0
         self.left_motor_polarity = True
-        self.right_motor_polarity = False
+        self.right_motor_polarity = True
         self.left_joy_xpos = 0
         self.right_joy_xpos = 0
 
     def update(self, left, right):
-        left_pos_difference = left - median_pos
-        right_pos_difference = right - median_pos
+        #left_pos_difference = left - self.median_pos
+        #right_pos_difference = right - self.median_pos
 
-        self.left_speed = update_speed(left_pos_difference, self.left_speed, self.left_motor_polarity)
-        self.right_speed = update_speed(right_pos_difference, self.right_speed, self.right_motor_polarity)
+        self.left_speed = 512 - left * 0.48#self.update_speed(left_pos_difference, self.left_speed, self.left_motor_polarity)
+        self.right_speed = right - 512 * 0.48#self.update_speed(right_pos_difference, self.right_speed, self.right_motor_polarity)
 
-        self.left_motor_polarity = polarity_update(left_pos_difference, self.left_motor_polarity, self.left_speed);
-        self.right_motor_polarity = polarity_update(right_pos_difference, self.right_motor_polarity, self.right_speed);
+        self.left_motor_polarity = True if self.left_speed > 0 else False #self.polarity_update(left_pos_difference, self.left_motor_polarity, self.left_speed);
+        self.right_motor_polarity = True if self.left_speed > 0 else False
+#self.polarity_update(right_pos_difference, self.right_motor_polarity, self.right_speed);
 
         # Easier to send 1/0 to arduino compared to true/false
         if self.left_motor_polarity:
@@ -39,11 +40,11 @@ class Motor:
         speed_updater = motor_speed
 
         # Calculate change in speed
-        speed_change = (max_speed_increase / median_pos) * abs(pos_difference)
+        speed_change = (self.max_speed_increase / self.median_pos) * abs(pos_difference)
 
         # Idle de-acceleration
         if -20 < pos_difference < 20:
-            speed_updater -= max_speed_increase / 2
+            speed_updater -= self.max_speed_increase
             if speed_updater < 0:
                 speed_updater = 0
 
@@ -54,8 +55,8 @@ class Motor:
             speed_updater += speed_change
 
             # Check to not exceed max speed
-            if speed_updater > max_speed:
-                speed_updater = max_speed
+            if speed_updater > self.max_speed:
+                speed_updater = self.max_speed
 
         # Back throttle
         if pos_difference < -20 and current_polarity is False:
@@ -64,18 +65,18 @@ class Motor:
             speed_updater += speed_change
 
             # Check to not exceed max speed
-            if speed_updater > max_speed:
-                speed_updater = max_speed
+            if speed_updater > self.max_speed:
+                speed_updater = self.max_speed
 
                 # Forward de-acceleration
             if pos_difference < -20 and current_polarity is True and motor_speed > 0:
-                speed_updater -= speed_change
+                speed_updater -= speed_change * 1.5
                 if speed_updater < 0:
                     speed_updater = 0
 
                     # Backward de-acceleration
             if pos_difference > 20 and current_polarity is False and motor_speed > 0:
-                speed_updater -= speed_change
+                speed_updater -= speed_change * 1.5
                 if speed_updater < 0:
                     speed_updater = 0
 

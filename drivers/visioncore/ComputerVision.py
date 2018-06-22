@@ -1,7 +1,6 @@
 import sys
 import cv2
 
-sys.path.append('../')
 from visioncore import CupVision, DotVision
 
 
