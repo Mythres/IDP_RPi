@@ -20,7 +20,7 @@ class Obstaclecourse:
         self.left_joy_xpos = 512
         self.right_joy_xpos = 512
         self.serial = serial.Serial("/dev/ttyACM0")
-        self.vision = CupVision.CupVisionHandler("CupVision", "Vision to detect cup")
+        self.vision = CupVisionHandler("CupVision", "Vision to detect cup")
 
     def run(self, conn):
         self.conn = conn

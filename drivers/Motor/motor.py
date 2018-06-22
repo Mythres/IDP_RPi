@@ -13,20 +13,20 @@ class Motor:
         self.right_joy_xpos = 0
 
     def update(self, left, right):
-        # left_pos_difference = left - self.median_pos
-        # right_pos_difference = right - self.median_pos
+        left_pos_difference = left - self.median_pos
+        right_pos_difference = right - self.median_pos
 
-        self.left_speed = 512 - left * 0.48
-        self.right_speed = right - 512 * 0.48
+        # self.left_speed = 512 - left * 0.48
+        # self.right_speed = right - 512 * 0.48
 
-        # self.update_speed(left_pos_difference, self.left_speed, self.left_motor_polarity)
-        # self.update_speed(right_pos_difference, self.right_speed, self.right_motor_polarity)
+        self.update_speed(left_pos_difference, self.left_speed, self.left_motor_polarity)
+        self.update_speed(right_pos_difference, self.right_speed, self.right_motor_polarity)
 
-        self.left_motor_polarity = True if self.left_speed > 0 else False
-        self.right_motor_polarity = True if self.left_speed > 0 else False
+        # self.left_motor_polarity = True if self.left_speed > 0 else False
+        # self.right_motor_polarity = True if self.left_speed > 0 else False
 
-        # self.polarity_update(left_pos_difference, self.left_motor_polarity, self.left_speed);
-        # self.polarity_update(right_pos_difference, self.right_motor_polarity, self.right_speed);
+        self.polarity_update(left_pos_difference, self.left_motor_polarity, self.left_speed);
+        self.polarity_update(right_pos_difference, self.right_motor_polarity, self.right_speed);
 
         # Easier to send 1/0 to arduino compared to true/false
         if self.left_motor_polarity:

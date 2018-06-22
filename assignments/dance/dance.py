@@ -15,9 +15,9 @@ LED_INVERT = False
 LED_CHANNEL = 0
 
 
-def update_led(strip):
+def update_led(strip, g, r, b):
     #TODO Make led code for dance
-    {}
+    strip.setPixelColor(i, Color(g, r, b))
 
 
 class Dance:
@@ -37,14 +37,52 @@ class Dance:
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
 
+        # Monitor time at start of dance
+        start_time = time.time()
+
+        # Segment booleans
+        segment_one_done = False
+        segment_two_done = False
+        segment_three_done = False
+
+        # Move booleans
+        move_one_done = False
+        move_two_done = False
+        move_three_done = False
+
+        # Starting move (Drive in a circle
+        motor_values = str(1) + str(100) + str(1) + str(255)
+
+        # Starting led values
+        g = 0
+        r = 255
+        b = 0
+
         while True:
             self.handleMessages()
 
-            # TODO: Code dance and give values to serial.write for motor
+            current_time = time.time()
+
+            # Actual motor update to Arduino
+            self.serial.write(bytes(motor_values + ":", "utf-8"))
+
+            # Led update
+            update_led(strip, g, r, b)
+
+            # Switch to spinning after 10 seconds
+            if current_time - start_time > 10 and move_one_done is False:
+                motor_values = str(1) + str(255) + str(0) + str(255)
+                move_one_done = True
+                print("Segment one done")
+                continue
+
+            if current_time - start_time > 20 and move_two_done is False:
+                # TODO something else
+                move_two_done = True
+                print("Segment two done")
+                continue
 
             # TODO: Arm controls
-
-            motor_values = str(int(round(left_speed))) + "," + str(left_polarity) + "," + str(int(round(right_speed))) + "," + str(right_polarity)
 
             comm.send_msg(self.conn, comm.MsgTypes.STATUS, motor_values)
 
