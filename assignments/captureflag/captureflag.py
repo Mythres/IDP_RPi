@@ -19,12 +19,13 @@ class Captureflag:
     def run(self, conn):
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
-        motor_driver = motor.Motor()
+        motor_driver = motor.Motor(250, 80)
 
         while True:
             self.handleMessages()
 
             # TODO: Arm controls
+
 
             # Update motor
             left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)

@@ -27,7 +27,7 @@ class Obstaclecourse:
     def run(self, conn):
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
-        motor_driver = motor.Motor()
+        motor_driver = motor.Motor(250, 100)
 
         while True:
             self.handleMessages()
