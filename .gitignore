@@ -109,3 +109,4 @@ snap_files/
 
 
 # End of https://www.gitignore.io/api/python,snapcraft
+.idea/workspace.xml
