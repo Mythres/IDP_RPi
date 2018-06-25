@@ -1,9 +1,9 @@
 class Motor:
 
-    def __init__(self):
+    def __init__(self, max_speed, max_speed_increase):
         # Init motor variables
-        self.max_speed = 250
-        self.max_speed_increase = 40
+        self.max_speed = max_speed
+        self.max_speed_increase = max_speed_increase
         self.median_pos = 512
         self.left_speed = 0
         self.right_speed = 0
@@ -11,6 +11,7 @@ class Motor:
         self.right_motor_polarity = True
         self.left_joy_xpos = 0
         self.right_joy_xpos = 0
+        self.pos_range = 20
 
     def update(self, left, right):
         left_pos_difference = left - self.median_pos
@@ -48,13 +49,13 @@ class Motor:
         speed_change = (self.max_speed_increase / self.median_pos) * abs(pos_difference)
 
         # Idle de-acceleration
-        if -20 < pos_difference < 20:
+        if -self.pos_range < pos_difference < self.pos_range:
             speed_updater -= self.max_speed_increase
             if speed_updater < 0:
                 speed_updater = 0
 
         # Forward throttle
-        if pos_difference > 20 and current_polarity is True:
+        if pos_difference > self.pos_range and current_polarity is True:
 
             # Normal throttle
             speed_updater += speed_change
@@ -64,7 +65,7 @@ class Motor:
                 speed_updater = self.max_speed
 
         # Back throttle
-        if pos_difference < -20 and current_polarity is False:
+        if pos_difference < -self.pos_range and current_polarity is False:
 
             # Normal throttle
             speed_updater += speed_change
@@ -74,14 +75,14 @@ class Motor:
                 speed_updater = self.max_speed
 
                 # Forward de-acceleration
-            if pos_difference < -20 and current_polarity is True and motor_speed > 0:
-                speed_updater -= speed_change * 1.5
+            if pos_difference < -self.pos_range and current_polarity is True and motor_speed > 0:
+                speed_updater -= speed_change
                 if speed_updater < 0:
                     speed_updater = 0
 
                     # Backward de-acceleration
-            if pos_difference > 20 and current_polarity is False and motor_speed > 0:
-                speed_updater -= speed_change * 1.5
+            if pos_difference > self.pos_range and current_polarity is False and motor_speed > 0:
+                speed_updater -= speed_change
                 if speed_updater < 0:
                     speed_updater = 0
 

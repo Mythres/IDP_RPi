@@ -35,7 +35,9 @@ class Arena:
     def run(self, conn):
         self.conn = conn
         comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Started")
-        motor_driver = motor.Motor()
+
+        # 150 max speed, 40 speed increase
+        motor_driver = motor.Motor(150, 40)
 
         while True:
             self.handleMessages()
