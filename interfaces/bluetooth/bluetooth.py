@@ -64,8 +64,14 @@ class Bluetooth:
 
                     self.bl_send("2|Received")
 
+            except bluetooth.BluetoothError:
+                print("Exiting...")
+                self.send("exit")
+                sys.exit()
+
             except IOError:
                 pass
+
 
     def send(self, command):
         comm.send_msg(self.conn, comm.MsgTypes.COMMAND, command)

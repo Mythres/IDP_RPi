@@ -3,6 +3,8 @@ import bluetooth
 def get_socket(mac_address):
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     sock.connect((mac_address, 1))
+    sock.settimeout(1)
+
     return sock
 
 def send_data(socket, data):
@@ -26,12 +28,8 @@ def recv_data(socket):
     data = ""
     commands = []
 
-    socket.settimeout(1.0)
-
     while "|" not in data:
         data += socket.recv(1024).decode("utf-8", errors="ignore")
-        if data == "":
-            raise TimeoutError
 
     while not check_data(data):
         data += socket.recv(1024).decode("utf-8", errors="ignore")

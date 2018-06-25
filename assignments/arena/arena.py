@@ -26,6 +26,8 @@ class Arena:
         self.is_stopped = False
         self.left_joy_xpos = 512
         self.right_joy_xpos = 512
+        self.left_joy_ypos = 512
+        self.right_joy_ypos = 512
         self.serial = serial.Serial("/dev/ttyACM0")
 
         # Initiate neopixel led strip
@@ -57,14 +59,13 @@ class Arena:
             received = comm.recv_msg(self.conn)
             received_split = received.split(" ")
             if received_split[0] == "controller":
-                controller_values = received_split[1].split(",")
-                print(received_split)
-
-                print(controller_values)
+                controller_values = received_split[1].split("-")
 
                 # Grab positions
-                self.left_joy_xpos = int(controller_values[0].split(":")[1])
-                self.right_joy_xpos = int(controller_values[1].split(":")[1])
+                self.left_joy_ypos = int(controller_values[0].split(":")[1].split(",")[0])
+                self.right_joy_ypos = int(controller_values[1].split(":")[1].split(",")[0])
+                self.left_joy_xpos = int(controller_values[0].split(":")[1].split(",")[1])
+                self.right_joy_xpos = int(controller_values[1].split(":")[1].split(",")[1])
 
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
             if received == "Stop":

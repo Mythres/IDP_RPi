@@ -18,6 +18,8 @@ class Knabenwunderhorn:
         self.is_stopped = False
         self.left_joy_xpos = 512
         self.right_joy_xpos = 512
+        self.left_joy_ypos = 512
+        self.right_joy_ypos = 512
         self.serial = serial.Serial("/dev/ttyACM0")
         self.vision = DotVision.DotVisionHandler("RedDotVision", "Vision to find center of red dot")
 
@@ -57,8 +59,10 @@ class Knabenwunderhorn:
                 print(controller_values)
 
                 # Grab positions
-                self.left_joy_xpos = int(controller_values[0].split(":")[1])
-                self.right_joy_xpos = int(controller_values[1].split(":")[1])
+                self.left_joy_ypos = int(controller_values[0].split(":")[1].split(",")[0])
+                self.right_joy_ypos = int(controller_values[1].split(":")[1].split(",")[0])
+                self.left_joy_xpos = int(controller_values[0].split(":")[1].split(",")[1])
+                self.right_joy_xpos = int(controller_values[1].split(":")[1].split(",")[1])
 
                 comm.send_msg(self.conn, comm.MsgTypes.REPLY, "Received")
             if received == "Stop":

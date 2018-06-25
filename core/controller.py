@@ -73,6 +73,7 @@ class Controller:
             
             assignment = self.assignment 
             self.assignment = None
+            self.started = False
             self.assignment_conn = None
             self.assignment_proc = None
             comm.send_msg(self.interface_conn, comm.MsgTypes.REPLY, "Unloaded " + assignment.name() + ".")
