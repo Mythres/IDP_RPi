@@ -3,6 +3,7 @@ import time
 import utils.communication as comm
 import drivers.Motor.motor as motor
 import serial
+from drivers.Motor import MotorDirections
 from neopixel import *
 
 # TODO: Define how many leds for the dance
@@ -16,7 +17,7 @@ LED_CHANNEL = 0
 
 
 def update_led(strip, g, r, b):
-    #TODO Make led code for dance
+    # TODO Make led code for dance
     strip.setPixelColor(i, Color(g, r, b))
 
 
@@ -30,8 +31,10 @@ class Dance:
         self.serial = serial.Serial("/dev/ttyACM0")
 
         # Initiate neopixel led strip
-        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS,
+                                       LED_CHANNEL)
         self.strip.begin()
+        self.motor = motor.Motor(100, 25)
 
     def run(self, conn):
         self.conn = conn
@@ -39,19 +42,6 @@ class Dance:
 
         # Monitor time at start of dance
         start_time = time.time()
-
-        # Segment booleans
-        segment_one_done = False
-        segment_two_done = False
-        segment_three_done = False
-
-        # Move booleans
-        move_one_done = False
-        move_two_done = False
-        move_three_done = False
-
-        # Starting move (Drive in a circle
-        motor_values = str(1) + str(100) + str(1) + str(255)
 
         # Starting led values
         g = 0
@@ -63,31 +53,36 @@ class Dance:
 
             current_time = time.time()
 
-            # Actual motor update to Arduino
-            self.serial.write(bytes(motor_values + ":", "utf-8"))
+            if current_time - start_time < 5:
+                print("backward")
+                ls, lp, rs, rp = self.motor.move_backward(250, True)
+            elif current_time - start_time < 10:
+                print("forward")
+                ls, lp, rs, rp = self.motor.move_forward(100, True)
+            elif current_time - start_time < 15:
+                print("forward right")
+                ls, lp, rs, rp = self.motor.rotate_around_axis(100, MotorDirections.RIGHT,
+                                                               autoTransform=True)
+            elif current_time - start_time < 20:
+                print("forward left")
+                ls, lp, rs, rp = self.motor.rotate_around_axis(100, MotorDirections.LEFT,
+                                                               autoTransform=True)
+            else:
+                self.motor.update(0, 0)
+                if current_time - start_time < 25:
+                    break
+                else:
+                    continue
 
-            # Led update
-            update_led(strip, g, r, b)
-
-            # Switch to spinning after 10 seconds
-            if current_time - start_time > 10 and move_one_done is False:
-                motor_values = str(1) + str(255) + str(0) + str(255)
-                move_one_done = True
-                print("Segment one done")
-                continue
-
-            if current_time - start_time > 20 and move_two_done is False:
-                # TODO something else
-                move_two_done = True
-                print("Segment two done")
-                continue
-
-            # TODO: Arm controls
+            vals = self.motor.get_motor_values_string(ls, lp, rs, rp)
+            # if vals is not motor_values:
+            # print(vals)
+            motor_values = vals
 
             comm.send_msg(self.conn, comm.MsgTypes.STATUS, motor_values)
-
-            # Write to serial
+            # Updates the motor values to Arduino
             self.serial.write(bytes(motor_values + ";", "utf-8"))
+            update_led(self.strip, g, r, b)
 
             time.sleep(0.1)
 
