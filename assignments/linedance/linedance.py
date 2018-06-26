@@ -223,19 +223,19 @@ class Linedance:
 
         self.stream = self.pa.open(format=FORMAT,
                          channels=CHANNELS,
-                         # input_device_index=0,
+                         input_device_index=1,
                          rate=RATE,
                          input=True,
                          frames_per_buffer=CHUNK
                          )
 
         self.stream2 = self.lib.open(format=pyaudio.paFloat32,
-                           channels=1,
-                           rate=44100,
-                           # input_device_index=0,
+                           channels=CHANNELS,
+                           rate=RATE,
+                           input_device_index=1,
                            input=True,
                            output=False,
-                           frames_per_buffer=int(44100 * 10),
+                           frames_per_buffer=RATE * 10,
                            stream_callback=callback)
 
         # start the stream (4)
@@ -243,12 +243,12 @@ class Linedance:
         self.stream2.start_stream()
 
         while True:
-            self.handleMessages()
+            #self.handleMessages()
             try:
                 capture_time = time.time()
                 # print("analyzing beat")
 
-                audio_data = np.fromstring(self.stream.read(CHUNK), dtype=np.int16)
+                audio_data = np.fromstring(self.stream.read(CHUNK, exception_on_overflow=False), dtype=np.int16)
                 parse_audio(audio_data, self.strip)
 
                 capture_time_2 = time.time()
@@ -258,14 +258,12 @@ class Linedance:
                 # print(time_to_next_beat)
 
                 if time_to_next_beat < 0.05 and analyzing != True:
-                    # print("beat!")
+                    print("beat!")
                     time_to_next_beat = original_time_to_next_beat
                 elif analyzing:
                     {}
-                    # print("analyzing beat")
+                    print("analyzing beat")
 
-            except KeyboardInterrupt:
-                Looper = False
             except IOError as e:
                 print("(%d) Error recording: %s" % e)
 

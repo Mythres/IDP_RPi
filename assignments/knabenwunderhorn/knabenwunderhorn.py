@@ -37,7 +37,7 @@ class Knabenwunderhorn:
             # TODO  self.vision.do_Vision() # do vision here
 
             # Update motor
-            left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_xpos, self.right_joy_xpos)
+            left_speed, left_polarity, right_speed, right_polarity = motor_driver.update(self.left_joy_ypos, self.right_joy_ypos)
 
             motor_values = str(int(round(left_speed))) + "," + str(left_polarity) + "," + str(int(round(right_speed))) + "," + str(right_polarity)
 
@@ -53,7 +53,7 @@ class Knabenwunderhorn:
             received = comm.recv_msg(self.conn)
             received_split = received.split(" ")
             if received_split[0] == "controller":
-                controller_values = received_split[1].split(",")
+                controller_values = received_split[1].split("-")
                 print(received_split)
 
                 print(controller_values)
